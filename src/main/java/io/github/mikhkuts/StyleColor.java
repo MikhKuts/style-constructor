@@ -10,4 +10,8 @@ public class StyleColor {
         this.name = name;
         this.color = color;
     }
+    public StyleColor(String name, String  color) {
+        this.name = name;
+        this.color = new Color(color);
+    }
 }

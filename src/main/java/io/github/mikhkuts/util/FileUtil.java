@@ -5,7 +5,7 @@ import io.github.mikhkuts.StyleColor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class FileUtil {
@@ -18,10 +18,10 @@ public class FileUtil {
         Files.write(pathStr, OPEN.getBytes());
 
         for (StyleColor style: styleColor) {
-            Files.write(pathStr, convertToString(style).getBytes());
+            Files.write(pathStr, convertToString(style).getBytes(), StandardOpenOption.APPEND);
         }
 
-        Files.write(pathStr, CLOSE.getBytes());
+        Files.write(pathStr, CLOSE.getBytes(), StandardOpenOption.APPEND);
     }
 
     private String convertToString(StyleColor color){
