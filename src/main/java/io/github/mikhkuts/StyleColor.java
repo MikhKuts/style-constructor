@@ -1,7 +1,5 @@
 package io.github.mikhkuts;
 
-import java.util.HashMap;
-
 public class StyleColor {
     public String name;
     public Color color;
@@ -13,5 +11,14 @@ public class StyleColor {
     public StyleColor(String name, String  color) {
         this.name = name;
         this.color = new Color(color);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name);
+        sb.append(": ");
+        sb.append(color.toString());
+        return sb.toString();
     }
 }
