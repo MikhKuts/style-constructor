@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileUtil {
     private final String OPEN = "*{";
@@ -25,26 +27,27 @@ public class FileUtil {
         Files.write(pathStr, CLOSE.getBytes(), StandardOpenOption.APPEND);
     }
 
-    public Object[] read(String path) throws IOException {
+    public List<StyleColor> read(String path) throws IOException {
         Path pathStr = Path.of(path);
         String content = Files.readString(pathStr);
 
         // Извлекаем содержимое между OPEN и CLOSE
         int start = content.indexOf(OPEN) + OPEN.length();
         int end = content.lastIndexOf(CLOSE);
-        if (start >= end) return new Object[0];
+        if (start >= end) return new ArrayList<>();
 
         String innerContent = content.substring(start, end).trim();
-        if (innerContent.isEmpty()) return new Object[0];
+        if (innerContent.isEmpty()) return new ArrayList<>();
 
         // Разделяем по стилям (предполагая разделитель ";")
         String[] styles = innerContent.split(";");
 
         return Arrays.stream(styles)
-                .filter(s -> !s.trim().isEmpty())
-                .map(s -> s.trim())
+                .map(String::trim)
+                .filter(trim -> !trim.isEmpty())
                 .map(this::convertToColor)
-                .toArray();
+                .toList();
+
     }
 
     private String convertToString(StyleColor color){
